@@ -14,6 +14,8 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+
+
 //connect to our db
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/hmwkdb";
 
@@ -52,7 +54,21 @@ app.get("/", function (req, res) {
       // Otherwise, send the doc to the browser as a json object
       else {
         console.log("all article with comments: " + doc);
-        res.render("index", { articles: doc });
+        res.render("index", {
+          articles: doc,
+          //helpers to limit number of articles shown
+          helpers: {
+            each_upto: function (ary, max, options) {
+              if (!ary || ary.length == 0)
+                return options.inverse(this);
+
+              var result = [];
+              for (var i = 0; i < max && i < ary.length; ++i)
+                result.push(options.fn(ary[i]));
+              return result.join('');
+            }
+          }
+        });
       }
     });
 
@@ -84,7 +100,6 @@ app.get("/scrape", function (req, res) {
         link: arLink
       });
       //store info into mongodb scema for article
-      //TODO: send mongo info to client
       article.create(results)
         .then(function (info) {
           console.log(info.title)
@@ -95,11 +110,11 @@ app.get("/scrape", function (req, res) {
         })
     })
   })
-  function senddb(){
-    article.find({},function(err,data){
-      if(err){
+  function senddb() {
+    article.find({}, function (err, data) {
+      if (err) {
         throw err;
-      }else{
+      } else {
         res.json(data);
       }
     })
