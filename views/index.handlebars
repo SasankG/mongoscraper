@@ -1,17 +1,21 @@
 <div class="col-lg-8">
     <div class="articleList">
-        {{#each_upto articles 20}}
+
+        {{#each_upto articles 40}}
         <div class="card" style="width: 48rem;">
             <div class="card-body carder">
                 <h5 class="card-title">{{this.title}}</h5>
                 <p class="card-text">{{this.summary}}</p>
                 <a href="{{this.link}}" class="btn btn-primary">NYT Link</a>
-                <form>
-                    Add Comment! <input type="text" name="cmnt" class="cmnter">
-                    <button class="btn btn-secondary submitter">Add Comment!</button>
+                <form class="former">
+                    <p>Add a Comment!</p>
+                    <input type="text" name="cmnt" id="cmnter"/>
+                    <button type="button" class="btn btn-secondary submitter">Add!</button>
                 </form>
+                <div class="commentList">
+                </div>
             </div>
-        </div>  
+        </div>
         {{/each_upto}}
     </div>
 </div>
