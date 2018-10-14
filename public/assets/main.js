@@ -9,8 +9,9 @@ $(document).ready(function(){
     console.log("Hi");
 
     
-    let commenter = $("#cmnter").val();
+    
     $(".submitter").click(function(e){
+        let commenter = $("#cmnter").val();
         e.preventDefault();
         console.log(commenter);
         $('.commentList').text(commenter);
